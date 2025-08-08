@@ -22,23 +22,22 @@
       .toggle-btn.active {
         opacity: 1;
         transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       }
       .toggle-btn {
-        opacity: 0.5;
+        opacity: 0.6;
       }
     </style>
   </head>
   <body
     class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300"
   >
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+    <div class="container flex flex-col mx-auto p-4 sm:p-6 lg:p-8 gap-6">
       <div class="relative bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6">
         <!-- Botão Exportar CSV -->
         <button
           id="export-csv-btn"
           type="button"
-          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+          class="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
           title="Exportar para CSV"
         >
           <svg
@@ -58,7 +57,7 @@
         </button>
 
         <!-- Título e descrição -->
-        <div class="text-center mb-4 pt-8 sm:pt-0">
+        <div class="text-center mb-4">
           <h1
             id="main-title"
             class="text-2xl sm:text-3xl font-bold text-sky-600 dark:text-sky-400"
@@ -107,20 +106,20 @@
         </div>
 
         <!-- Controles do Gráfico -->
-        <div>
-          <label
-            for="seed-input"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Semente do Ruído (Seed)</label
-          >
-          <input
-            id="seed-input"
-            type="number"
-            value="12345"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-          />
-        </div>
         <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label
+              for="seed-input"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >Semente do Ruído (Seed)</label
+            >
+            <input
+              id="seed-input"
+              type="number"
+              value="12345"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            />
+          </div>
           <div>
             <label
               for="noiseSlider"
@@ -142,28 +141,72 @@
               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
             />
           </div>
-          <div>
-            <label
-              for="factorSlider"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Parâmetro 'a' do Filtro:
-              <span
-                id="factorValue"
-                class="font-bold text-sky-600 dark:text-sky-400"
-                >0.80</span
-              ></label
-            >
-            <input
-              id="factorSlider"
-              type="range"
-              min="0"
-              max="1.0"
-              step="0.01"
-              value="0.8"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-            />
-          </div>
         </div>
+      </div>
+      <div
+        class="bg-white dark:bg-gray-900 p-6 rounded-2xl shadow-lg border-t-4 border-purple-500"
+      >
+        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+          O Coeficiente do Filtro (a)
+        </h2>
+        <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+          O valor de <i>a</i> simboliza no filtro o quão
+          <strong>forte</strong> será o seu efeito. A intensidade, assim como o
+          atraso gerado no sinal, aumenta à medida que o valor se aproxima de 1.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div>
+                 <label
+                    for="factorSlider"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >Parâmetro 'a' do Filtro:
+                    <span
+                        id="factorValue"
+                        class="font-bold text-sky-600 dark:text-sky-400"
+                        >0.80</span
+                    ></label
+                    >
+                    <input
+                    id="factorSlider"
+                    type="range"
+                    min="0"
+                    max="1.0"
+                    step="0.01"
+                    value="0.8"
+                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    />
+            </div>
+            <div id="filterButtonContainer" class="flex flex-row gap-2 sm:gap-4 justify-center md:justify-start">
+                <button
+                data-slider-value="0.16"
+                class="preset-btn flex-1 px-3 py-2 text-sm font-semibold rounded-full shadow-sm transition-all duration-200 text-white bg-purple-500 hover:bg-purple-600"
+                >
+                Preset A
+                </button>
+                <button
+                data-slider-value="0.65"
+                class="preset-btn flex-1 px-3 py-2 text-sm font-semibold rounded-full shadow-sm transition-all duration-200 text-white bg-purple-500 hover:bg-purple-600"
+                >
+                Preset B
+                </button>
+                <button
+                data-slider-value="0.85"
+                class="preset-btn flex-1 px-3 py-2 text-sm font-semibold rounded-full shadow-sm transition-all duration-200 text-white bg-purple-500 hover:bg-purple-600"
+                >
+                Preset C
+                </button>
+            </div>
+        </div>
+        <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 mt-6">
+          <li>
+            <strong class="text-gray-800 dark:text-gray-200">Próximo de 1:</strong> O filtro tem um
+            efeito de suavização muito forte, resultando em uma filtragem mais agressiva das altas frequências.
+          </li>
+          <li>
+            <strong class="text-gray-800 dark:text-gray-200">Próximo de 0:</strong> O efeito de
+            suavização é bem mais fraco, e o sinal resultante fica mais parecido com o original.
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -177,6 +220,7 @@
         const noiseSlider = document.getElementById("noiseSlider");
         const noiseValueSpan = document.getElementById("noiseValue");
         const factorSlider = document.getElementById("factorSlider");
+        const filterButtonContainer = document.getElementById("filterButtonContainer");
         const factorValueSpan = document.getElementById("factorValue");
         const seedInput = document.getElementById("seed-input");
         const toggleControls = document.getElementById("toggle-controls");
@@ -192,14 +236,13 @@
         }
 
         function convolve1D(signal, kernel) {
-          //y[n] = Σ [de k=0 até 200] x[n-k] * h[k]]
           const signalLen = signal.length;
           const kernelLen = kernel.length;
           const output = new Array(signalLen).fill(0);
 
           for (let n = 0; n < signalLen; n++) {
             let temp = 0;
-            for (let k = 0; k < kernelLen - n; k++) {
+            for (let k = 0; k < kernelLen; k++) {
               if (n - k >= 0) {
                 temp += signal[n - k] * kernel[k];
               }
@@ -236,6 +279,7 @@
             corruptedPoints,
             noisePoints,
             filteredPoints,
+            filterFactor: factor,
           };
         }
 
@@ -254,6 +298,7 @@
             corruptedPoints,
             noisePoints,
             filteredPoints,
+            filterFactor: currentFactor,
           } = generateSignalData(noiseAmplitude, filterFactor, seed);
 
           currentSignalData = {
@@ -262,25 +307,17 @@
             corruptedPoints,
             noisePoints,
             filteredPoints,
-            filterFactor,
+            filterFactor: currentFactor,
           };
 
-          // --- Definição de Cores ---
-          // Cores do gráfico
-          const chartOriginalColor = "rgba(14, 165, 233, 0.8)";
-          const chartCorruptedColor = "rgba(100, 116, 139, 0.9)";
-          const chartFilteredColor = "rgba(34, 197, 94, 0.9)";
-          const chartNoiseColor = "rgba(220, 38, 38, 1)";
-          const chartTextColor = "#374151";
-          const chartGridColor = "rgba(255, 255, 255, 0.05)";
-          const chartTitleColor = "#0284c7";
+          const isDarkMode = document.documentElement.classList.contains("dark");
+          const chartTextColor = isDarkMode ? "#e5e7eb" : "#374151";
+          const chartGridColor = isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)";
+          const chartTitleColor = isDarkMode ? "#38bdf8" : "#0284c7";
 
-          // Cores da UI externa adaptativas
-          const isDarkMode =
-            document.documentElement.classList.contains("dark");
-          const externalTitleColor = isDarkMode ? "#38bdf8" : "#0284c7";
-          mainTitle.style.color = externalTitleColor;
-          noiseValueSpan.style.color = externalTitleColor;
+          mainTitle.style.color = chartTitleColor;
+          noiseValueSpan.style.color = chartTitleColor;
+          factorValueSpan.style.color = chartTitleColor;
 
           signalChart = new Chart(ctx, {
             type: "bar",
@@ -290,37 +327,37 @@
                 {
                   label: "Original",
                   data: originalDataPoints,
-                  backgroundColor: chartOriginalColor,
+                  backgroundColor: "rgba(14, 165, 233, 0.8)",
                   order: 3,
                 },
                 {
                   label: "Corrompido",
                   data: corruptedPoints,
-                  backgroundColor: chartCorruptedColor,
+                  backgroundColor: "rgba(100, 116, 139, 0.9)",
                   order: 2,
                 },
                 {
                   label: "Filtrado",
                   data: filteredPoints,
-                  backgroundColor: chartFilteredColor,
+                  backgroundColor: "rgba(34, 197, 94, 0.9)",
                   order: 1,
                 },
                 {
-                  label: "Ruído", // Hastes do ruído
+                  label: "Ruído",
                   data: noisePoints,
-                  backgroundColor: chartNoiseColor,
+                  backgroundColor: "rgba(220, 38, 38, 1)",
                   order: 0,
                   barPercentage: 0.6,
                   categoryPercentage: 0.3,
                 },
                 {
-                  label: "Ruído Pontos", // Marcadores do ruído
+                  label: "Ruído Pontos",
                   type: "line",
                   data: noisePoints,
                   showLine: false,
                   pointRadius: 2,
-                  pointBackgroundColor: chartNoiseColor,
-                  order: -1, // Garante que seja desenhado por cima de tudo
+                  pointBackgroundColor: "rgba(220, 38, 38, 1)",
+                  order: -1,
                 },
               ],
             },
@@ -334,11 +371,7 @@
                   display: true,
                   text: "Amplitude do Sinal vs. Amostra (n)",
                   color: chartTitleColor,
-                  font: {
-                    size: 18,
-                    weight: "bold",
-                    family: "'Montserrat', sans-serif",
-                  },
+                  font: { size: 18, weight: "bold", family: "'Montserrat', sans-serif" },
                 },
                 tooltip: {
                   mode: "index",
@@ -353,17 +386,9 @@
                     display: true,
                     text: "Amostra (n)",
                     color: chartTextColor,
-                    font: {
-                      size: 16,
-                      weight: "bold",
-                      family: "'Montserrat', sans-serif",
-                    },
+                    font: { size: 16, weight: "bold", family: "'Montserrat', sans-serif" },
                   },
-                  ticks: {
-                    color: chartTextColor,
-                    autoSkip: true,
-                    maxTicksLimit: 15,
-                  },
+                  ticks: { color: chartTextColor, autoSkip: true, maxTicksLimit: 15 },
                   grid: { display: false },
                 },
                 y: {
@@ -372,11 +397,7 @@
                     display: true,
                     text: "Sinal",
                     color: chartTextColor,
-                    font: {
-                      size: 16,
-                      weight: "bold",
-                      family: "'Montserrat', sans-serif",
-                    },
+                    font: { size: 16, weight: "bold", family: "'Montserrat', sans-serif" },
                   },
                   ticks: { color: chartTextColor },
                   grid: { color: chartGridColor },
@@ -395,48 +416,45 @@
           });
           signalChart.update();
         }
-
+        
+        // --- Event Listeners ---
         toggleControls.addEventListener("click", (e) => {
           if (e.target.tagName !== "BUTTON") return;
-
           const button = e.target;
           const index = parseInt(button.dataset.datasetIndex, 10);
-
           button.classList.toggle("active");
           const isVisible = button.classList.contains("active");
-
           signalChart.setDatasetVisibility(index, isVisible);
           if (index === 3) {
             signalChart.setDatasetVisibility(4, isVisible);
           }
-
           signalChart.update();
         });
 
         noiseSlider.addEventListener("input", (event) => {
-          const newNoiseAmplitude = parseFloat(event.target.value);
-          noiseValueSpan.textContent = newNoiseAmplitude.toFixed(2);
+          noiseValueSpan.textContent = parseFloat(event.target.value).toFixed(2);
           updateChart();
         });
 
         factorSlider.addEventListener("input", (event) => {
-          const newFactorValue = parseFloat(event.target.value);
-          factorValueSpan.textContent = newFactorValue.toFixed(2);
+          factorValueSpan.textContent = parseFloat(event.target.value).toFixed(2);
           updateChart();
         });
 
         seedInput.addEventListener("input", updateChart);
+        
+        // Corrected Preset Button Logic
+        filterButtonContainer.querySelectorAll(".preset-btn").forEach((button) => {
+          button.addEventListener("click", function () {
+            const value = parseFloat(this.dataset.sliderValue);
+            factorSlider.value = value;
+            factorValueSpan.textContent = value.toFixed(2); // Update text display
+            updateChart(); // Redraw chart
+          });
+        });
 
         exportCsvBtn.addEventListener("click", function () {
-          const {
-            labels,
-            originalDataPoints,
-            corruptedPoints,
-            noisePoints,
-            filteredPoints,
-            filterFactor,
-          } = currentSignalData;
-          console.log(currentSignalData);
+          const { labels, originalDataPoints, corruptedPoints, noisePoints, filteredPoints, filterFactor } = currentSignalData;
           let csvContent = "n,original,corrompido,filtrado,ruido,factor\n";
           for (let i = 0; i < labels.length; i++) {
             const row = [
@@ -449,9 +467,7 @@
             ].join(",");
             csvContent += row + "\n";
           }
-          const blob = new Blob([csvContent], {
-            type: "text/csv;charset=utf-8;",
-          });
+          const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
           const link = document.createElement("a");
           const url = URL.createObjectURL(blob);
           link.setAttribute("href", url);
@@ -462,15 +478,13 @@
           document.body.removeChild(link);
         });
 
-        const observer = new MutationObserver(() =>
-          updateChart(parseFloat(noiseSlider.value))
-        );
+        const observer = new MutationObserver(() => updateChart());
         observer.observe(document.documentElement, {
           attributes: true,
           attributeFilter: ["class"],
         });
 
-        updateChart(parseFloat(noiseSlider.value));
+        updateChart();
       });
     </script>
   </body>
